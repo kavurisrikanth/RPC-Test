@@ -1,0 +1,6 @@
+(Application App {
+    name 'App'
+    root #MyPage
+    target FlutterFrontEnd
+    defaultTheme #basic
+})

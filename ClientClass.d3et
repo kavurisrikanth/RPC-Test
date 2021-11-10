@@ -1,5 +1,16 @@
 client class RPCTester {
-    static void getNumber() async {
+    static Future<String> getNumber() async {
         Integer value = RPCServices.getTestRPC().getNumber().await;
+        return value.toString();
+    }
+
+    static Future<String> getNumberFromModel(TestModel m) async {
+        Integer value = RPCServices.getTestRPC().getNumberFromModel(m).await;
+        return value.toString();
+    }
+
+    static Future<String> getModelByNumber(Integer num) async {
+        TestModel m = RPCServices.getTestRPC().getModelByNumber(num).await;
+        return '';
     }
 }

@@ -1,0 +1,37 @@
+(D3EPage MyPage {
+    build (CRef id {
+        component #Column
+        children [
+            (CRef id {
+                component #TextView
+                data [
+                    ({
+                        prop #data
+                        bind true
+                        bindTo `RPCTester.getNumber().await`
+                    })
+                ]
+            })
+            (CRef id {
+                component #TextView
+                data [
+                    ({
+                        prop #data
+                        bind true
+                        bindTo `RPCTester.getNumberFromModel(TestModel()).await`
+                    })
+                ]
+            })
+            (CRef id {
+                component #TextView
+                data [
+                    ({
+                        prop #data
+                        bind true
+                        bindTo `RPCTester.getModelByNumber(23).await`
+                    })
+                ]
+            })
+        ]
+    })
+})
