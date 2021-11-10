@@ -1,4 +1,4 @@
-import 'package:annotest/main/rpc/TestRPCClient.dart';
+import 'TestRPCClient.dart';
 
 class RPCServices {
   static TestRPCClient getTestRPC() {
