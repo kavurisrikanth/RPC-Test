@@ -1,0 +1,5 @@
+client class RPCTester {
+    static void getNumber() async {
+        Integer value = RPCServices.getTestRPC().getNumber().await;
+    }
+}

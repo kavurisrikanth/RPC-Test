@@ -1,0 +1,43 @@
+package d3e.core;
+
+public class SchemaConstants {
+  public static final int String = 0;
+  public static final int Integer = 1;
+  public static final int Double = 2;
+  public static final int Boolean = 3;
+  public static final int Date = 4;
+  public static final int DateTime = 5;
+  public static final int Time = 6;
+  public static final int Duration = 7;
+  public static final int DFile = 8;
+  public static final int AnonymousUser = 9;
+  public static final int Avatar = 10;
+  public static final int ChangePasswordRequest = 11;
+  public static final int D3EImage = 12;
+  public static final int D3EMessage = 13;
+  public static final int EmailMessage = 14;
+  public static final int OneTimePassword = 15;
+  public static final int PushNotification = 16;
+  public static final int ReportConfig = 17;
+  public static final int ReportConfigOption = 18;
+  public static final int SMSMessage = 19;
+  public static final int TestModel = 20;
+  public static final int User = 21;
+  public static final int UserSession = 22;
+  public static final int ReportOutput = 23;
+  public static final int ReportOutOption = 24;
+  public static final int ReportOutColumn = 25;
+  public static final int ReportOutAttribute = 26;
+  public static final int ReportOutRow = 27;
+  public static final int ReportOutCell = 28;
+  public static final int LoginResult = 29;
+  public static final int DBResultStatus = 30;
+  public static final int ConnectionStatus = 31;
+  public static final int MutateResultStatus = 32;
+  public static final int ChangeEventType = 33;
+  public static final int ColumnWidthType = 34;
+  public static final int TrackSizeType = 35;
+  public static final int IconType = 36;
+  public static final int ImageFrom = 37;
+  public static final int _TOTAL_COUNT = 38;
+}

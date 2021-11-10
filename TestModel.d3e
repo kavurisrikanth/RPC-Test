@@ -1,0 +1,9 @@
+(Model TestModel {
+    properties [
+        (number {
+            type ({
+                primitive Integer
+            })
+        })
+    ]
+})

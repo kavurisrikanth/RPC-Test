@@ -1,0 +1,14 @@
+@RPCService
+server class TestRPC {
+    static Integer getNumber() {
+        return -1;
+    }
+
+    static Integer getNumberFromModel(TestModel m) {
+        return 2;
+    }
+
+    static TestModel getModelByNumber(Integer x) {
+        return null;
+    }
+}

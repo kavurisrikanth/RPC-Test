@@ -1,0 +1,5 @@
+(Project AnnoTest {
+    name 'AnnoTest'
+    package 'AnnoTest'
+    domain 'd3e.AnnoTest'
+})
