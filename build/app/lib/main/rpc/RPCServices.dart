@@ -1,7 +1,12 @@
 import 'TestRPCClient.dart';
 
 class RPCServices {
+  static TestRPCClient _testRPC;
   static TestRPCClient getTestRPC() {
-    return TestRPCClient.get();
+    if (_testRPC == null) {
+      _testRPC = TestRPCClient();
+    }
+
+    return _testRPC;
   }
 }
