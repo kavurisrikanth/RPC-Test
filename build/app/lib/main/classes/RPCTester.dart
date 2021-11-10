@@ -1,5 +1,5 @@
 import '../models/TestModel.dart';
-import '../rocket/RPCServices.dart';
+import '../rpc/RPCServices.dart';
 import 'dart:async';
 
 class RPCTester {
