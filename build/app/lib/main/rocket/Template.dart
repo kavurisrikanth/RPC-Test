@@ -38,15 +38,37 @@ class ChannelConstants {
   static const int BlahServerGo = 0;
   static const int BLAH_MESSAGE_COUNT = 1;
   static const int TOTAL_CHANNEL_COUNT = 1;
-  static final List<TemplateChannel> channels = [
-    TemplateChannel('blah', '17af13daa1c18a6be359ab8730a67809', [
-      TemplateMessage('go', [TemplateParam(Template.typeInt('Integer'))])
+  static final List<TemplateClass> channels = [
+    TemplateClass('blah', '17af13daa1c18a6be359ab8730a67809', [
+      TemplateMethod('go', [TemplateParam(Template.typeInt('Integer'))])
+    ])
+  ];
+}
+
+class RPCConstants {
+  static const int TestRPC = 0;
+  static const int TestRPCGetNumber = 0;
+  static const int TestRPCGetNumberFromModel = 1;
+  static const int TestRPCGetModelByNumber = 2;
+  static const int TESTRPC_PROCEDURE_COUNT = 3;
+  static const int TOTAL_RPC_CLASS_COUNT = 1;
+  static final List<TemplateClass> classes = [
+    TemplateClass('TestRPC', '5e4bd81245a5626ffb84bc1f120f4cc5', [
+      TemplateMethodWithReturn('getNumber', [], Template.typeInt('Integer')),
+      TemplateMethodWithReturn(
+          'getNumberFromModel',
+          [TemplateParam(Template.typeInt('TestModel'))],
+          Template.typeInt('Integer')),
+      TemplateMethodWithReturn(
+          'getModelByNumber',
+          [TemplateParam(Template.typeInt('Integer'))],
+          Template.typeInt('TestModel'))
     ])
   ];
 }
 
 class Template {
-  static String HASH = 'c6a4313efbf44863907192db7c5eb5ee';
+  static String HASH = '1e75fa42aaa22a934031f8cfb6c63b1c';
   static List<Usage> _usages = [];
   static List<TemplateType> _types = [
     TemplateType('Boolean', '27226c864bac7454a8504f8edb15d95b', []),

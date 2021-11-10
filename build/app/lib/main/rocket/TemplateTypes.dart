@@ -81,17 +81,30 @@ class TemplateType {
   }
 }
 
-class TemplateChannel {
+class TemplateClass {
   final String name;
   final String hash;
-  final List<TemplateMessage> messages;
-  TemplateChannel(this.name, this.hash, this.messages);
+  final List<TemplateMethod> methods;
+  TemplateClass(this.name, this.hash, this.methods);
 }
 
-class TemplateMessage {
+class TemplateMethod {
   final String name;
   final List<TemplateParam> params;
-  TemplateMessage(this.name, this.params);
+  TemplateMethod(this.name, this.params);
+}
+
+class TemplateMethodWithReturn extends TemplateMethod {
+  final int returnType;
+  final bool returnCollection;
+
+  TemplateMethodWithReturn(
+      String name, List<TemplateParam> params, this.returnType,
+      {this.returnCollection = false})
+      : super(name, params);
+
+  // void will be -1
+  bool isVoidReturn() => this.returnType == -1;
 }
 
 class TemplateParam {

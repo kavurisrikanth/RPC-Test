@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:annotest/main/classes/core.dart';
+
 import '../classes/ConnectionEvent.dart';
 import '../classes/ConnectionStatus.dart';
 
@@ -72,6 +74,8 @@ class MessageDispatch {
   static const int LOGOUT = 14;
   static const int OBJECTS = -1;
   static const int CHANNEL_MESSAGE = -2;
+  // -3 -> CHANNEL_MESSAGE_ACK
+  static const int RPC_MESSAGE = -4;
 
   int _retryCount = 0;
   _ConnectionStatus _status = _ConnectionStatus.Disconnected;
@@ -266,7 +270,7 @@ class MessageDispatch {
     for (Usage u in usages) {
       writer.writeString(u.hash);
     }
-    for (TemplateChannel c in ChannelConstants.channels) {
+    for (TemplateClass c in ChannelConstants.channels) {
       writer.writeString(c.hash);
     }
 
@@ -281,6 +285,7 @@ class MessageDispatch {
     List<int> unknownTypes = reader.readIntegerList();
     List<int> unknownUsages = reader.readIntegerList();
     List<int> unknownChannels = reader.readIntegerList();
+    List<int> unknownRPClasses = reader.readIntegerList();
 
     //Type Exchange
     writer = WSWriter(_cache);
@@ -318,11 +323,11 @@ class MessageDispatch {
     writer.writeInteger(unknownChannels.length);
     unknownChannels.forEach((e) {
       writer.writeInteger(e);
-      TemplateChannel c = ChannelConstants.channels[e];
+      TemplateClass c = ChannelConstants.channels[e];
       print('Unknown channel: ' + e.toString() + ', ' + c.name);
       writer.writeString(c.name);
-      writer.writeInteger(c.messages.length);
-      for (TemplateMessage tm in c.messages) {
+      writer.writeInteger(c.methods.length);
+      for (TemplateMethod tm in c.methods) {
         print('Unknown message: ' + tm.name);
         writer.writeString(tm.name);
         writer.writeInteger(tm.params.length);
@@ -330,6 +335,34 @@ class MessageDispatch {
           print('Unknown param: ' + tp.type.toString());
           writer.writeInteger(tp.type);
           writer.writeBoolean(tp.collection);
+        }
+      }
+    });
+
+    // Remote Procedure Calls
+    print('Num Unknown Remote Procedure classes: ' +
+        unknownRPClasses.length.toString());
+    writer.writeInteger(unknownRPClasses.length);
+    unknownRPClasses.forEach((e) {
+      writer.writeInteger(e);
+      TemplateClass c = RPCConstants.classes[e];
+      print('Unknown RP class: ' + e.toString() + ', ' + c.name);
+      writer.writeString(c.name);
+      writer.writeInteger(c.methods.length);
+      for (TemplateMethodWithReturn tm in c.methods) {
+        print('Unknown RemoteProdedure: ' + tm.name);
+        writer.writeString(tm.name);
+        writer.writeInteger(tm.params.length);
+        for (TemplateParam tp in tm.params) {
+          print('Unknown param: ' + tp.type.toString());
+          writer.writeInteger(tp.type);
+          writer.writeBoolean(tp.collection);
+        }
+        if (!tm.isVoidReturn()) {
+          print('Unknown Remote Procedure return type: ' +
+              tm.returnType.toString());
+          writer.writeInteger(tm.returnType);
+          writer.writeBoolean(tm.returnCollection);
         }
       }
     });
@@ -839,6 +872,25 @@ class MessageDispatch {
     writer.writeInteger(channelIdx);
     writer.writeInteger(msgIdx);
     return writer;
+  }
+
+  // RPC method
+  Future<WSReader> rpcMessage(int clsIdx, int methodIdx,
+      {Consumer<WSWriter> args}) async {
+    WSWriter writer = WSWriter(_cache);
+    int id = IdGenerator.get().next();
+    writer.writeInteger(id);
+    writer.writeInteger(RPC_MESSAGE);
+    writer.writeInteger(clsIdx);
+    writer.writeInteger(methodIdx);
+    if (args != null) {
+      args(writer);
+    }
+    _client.send(writer.out);
+    WSReader reader =
+        await respStream.firstWhere((m) => m.id == id).then((m) => m.reader);
+    reader.readByte(); // RPC_MESSAGE
+    return reader;
   }
 
   void send(WSWriter w) {
