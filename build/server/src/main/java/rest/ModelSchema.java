@@ -15,8 +15,10 @@ import classes.ReportOutOption;
 import classes.ReportOutRow;
 import classes.ReportOutput;
 import classes.TrackSizeType;
+import d3e.core.ChannelConstants;
 import d3e.core.DFile;
 import d3e.core.SchemaConstants;
+import gqltosql.schema.DChannel;
 import gqltosql.schema.DModel;
 import gqltosql.schema.DModelType;
 import gqltosql.schema.FieldPrimitiveType;
@@ -236,6 +238,17 @@ public class ModelSchema extends AbstractModelSchema {
   }
 
   protected void recordAllChannels() {
-    recordNumChannels(0);
+    recordNumChannels(1);
+    DChannel blah = addChannel("blah", ChannelConstants.Blah, 2);
+    populateChannel(
+        blah,
+        ChannelConstants.BlahServerGo,
+        "go",
+        new gqltosql.schema.DParam(SchemaConstants.Integer));
+    populateChannel(
+        blah,
+        ChannelConstants.BlahClientCome,
+        "come",
+        new gqltosql.schema.DParam(SchemaConstants.Integer));
   }
 }

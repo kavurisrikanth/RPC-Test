@@ -1,0 +1,3 @@
+client class BlahClientImpl implements BlahClient {
+    void come(Integer num) {}
+}

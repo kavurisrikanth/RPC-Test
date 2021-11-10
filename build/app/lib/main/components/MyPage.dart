@@ -1,6 +1,11 @@
 import '../utils/ObservableState.dart';
+import '../classes/BlahClient.dart';
+import '../classes/BlahClientImpl.dart';
+import '../classes/BlahServer.dart';
 import '../classes/RPCTester.dart';
 import '../models/TestModel.dart';
+import '../rocket/Channels.dart';
+import '../rocket/ClientChannel.dart';
 import 'package:flutter/widgets.dart';
 
 class MyPage extends StatefulWidget {
@@ -17,6 +22,8 @@ class _MyPageState extends ObservableState<MyPage> {
     initListeners();
 
     enableBuild = true;
+
+    onInit();
   }
 
   void initListeners() {}
@@ -27,5 +34,17 @@ class _MyPageState extends ObservableState<MyPage> {
       Text((await RPCTester.getNumberFromModel(TestModel()))),
       Text((await RPCTester.getModelByNumber(23)))
     ]);
+  }
+
+  void onInit() async {
+    BlahClient _client = BlahClientImpl();
+
+    ClientChannel<BlahServer, BlahClient> channel = Channels.getBlahChannel();
+
+    BlahServer _server = (await channel.connect(_client));
+
+    if (_server != null) {
+      _server.go(123);
+    }
   }
 }

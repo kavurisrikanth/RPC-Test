@@ -1,0 +1,6 @@
+@Channel('blah')
+server class BlahServerImpl extends ServerChannel<BlahClient> implements BlahServer {
+    void go(Integer num) {
+
+    }
+}

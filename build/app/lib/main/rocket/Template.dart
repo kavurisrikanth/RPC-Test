@@ -34,12 +34,19 @@ const int USER = 13;
 class UsageConstants {}
 
 class ChannelConstants {
-  static const int TOTAL_CHANNEL_COUNT = 0;
-  static final List<TemplateChannel> channels = [];
+  static const int Blah = 0;
+  static const int BlahServerGo = 0;
+  static const int BLAH_MESSAGE_COUNT = 1;
+  static const int TOTAL_CHANNEL_COUNT = 1;
+  static final List<TemplateChannel> channels = [
+    TemplateChannel('blah', '17af13daa1c18a6be359ab8730a67809', [
+      TemplateMessage('go', [TemplateParam(Template.typeInt('Integer'))])
+    ])
+  ];
 }
 
 class Template {
-  static String HASH = '8c69b4d4303f53d244ebf14f9c68a4f3';
+  static String HASH = 'c6a4313efbf44863907192db7c5eb5ee';
   static List<Usage> _usages = [];
   static List<TemplateType> _types = [
     TemplateType('Boolean', '27226c864bac7454a8504f8edb15d95b', []),

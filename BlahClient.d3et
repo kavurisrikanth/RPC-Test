@@ -1,0 +1,3 @@
+abstract class BlahClient {
+    void come(Integer num);
+}

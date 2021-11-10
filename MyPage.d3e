@@ -34,4 +34,16 @@
             })
         ]
     })
+    eventHandlers [
+        (onInit {
+            block ```
+                BlahClient _client = BlahClientImpl();
+                ClientChannel<BlahServer, BlahClient> channel = Channels.getBlahChannel();
+                BlahServer _server = channel.connect(_client).await;
+                if (_server != null) {
+                    _server.go(123);
+                }
+            ```
+        })
+    ]
 })
